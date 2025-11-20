@@ -759,12 +759,11 @@
     <form
       id="survey-form"
       method="POST"
-      action="https://formsubmit.co/ajax/daviddandanell@gmail.com"
+      action="https://formsubmit.co/ajax/Daviddandanell@gmail.com"
       enctype="multipart/form-data"
     >
-      <input type="hidden" name="_subject" value="DanCham Member Survey 2025 submission">
+      <input type="hidden" name="_subject" value="DanCham Member Survey 2025 Submission">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://dancham.id/">
       <input type="hidden" name="_captcha" value="false">
 
       <div class="screen-shell">
@@ -1661,9 +1660,8 @@
       const action = (formEl.getAttribute("action") || "").trim();
       const method = (formEl.getAttribute("method") || "POST").toUpperCase();
 
-      const shouldSend = followUp && action.length > 0;
-
-      if (shouldSend) {
+      // Always send the survey responses via email
+      if (action.length > 0) {
         try {
           await fetch(action, {
             method,
