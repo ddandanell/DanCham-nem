@@ -61,26 +61,14 @@
     }
 
     .logo {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 18px;
     }
 
-    .logo-mark {
-      width: 30px;
-      height: 30px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #c8102e, #f94f66);
-      box-shadow: 0 6px 14px rgba(200, 16, 46, 0.45);
-    }
-
-    .logo-text-sub {
+    .logo-img {
       display: block;
-      font-size: 11px;
-      font-weight: 500;
-      color: #64748b;
+      height: 48px;
+      width: auto;
     }
 
     .lang-toggle {
@@ -693,11 +681,12 @@
 <div class="app">
   <header>
     <div class="logo">
-      <div class="logo-mark" aria-hidden="true"></div>
-      <div>
-        <span id="logo-text">DanCham</span>
-        <span class="logo-text-sub">Member Survey 2024</span>
-      </div>
+      <img
+        src="image.png"
+        alt="DanCham – Danish-Indonesian Business Chamber"
+        id="logo-img"
+        class="logo-img"
+      />
     </div>
     <div class="lang-toggle" aria-label="Language">
       <button type="button" data-lang="en" class="active">EN</button>
@@ -950,6 +939,7 @@
   const STRINGS = {
     en: {
       logo: "DanCham",
+      logoAlt: "DanCham – Danish-Indonesian Business Chamber",
       progressStep: (step, total) => `Step ${step} of ${total}`,
       progressExplainer: "Takes about 3–5 minutes to complete.",
       next: "Next",
@@ -971,6 +961,7 @@
     },
     da: {
       logo: "DanCham",
+      logoAlt: "DanCham – Dansk-Indonesisk Handelskammer",
       progressStep: (step, total) => `Trin ${step} af ${total}`,
       progressExplainer: "Det tager ca. 3–5 minutter at gennemføre.",
       next: "Næste",
@@ -1006,7 +997,7 @@
   const progressLabelEl = document.getElementById("progress-label");
   const progressExtraEl = document.getElementById("progress-extra");
   const progressFillEl = document.getElementById("progress-fill");
-  const logoTextEl = document.getElementById("logo-text");
+  const logoImgEl = document.getElementById("logo-img");
 
   document.querySelectorAll(".lang-toggle button").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -1067,7 +1058,11 @@
 
   function render() {
     const s = getStrings();
-    logoTextEl.textContent = s.logo;
+    if (logoImgEl) {
+      const altText = s.logoAlt || s.logo || logoImgEl.alt;
+      logoImgEl.alt = altText;
+      logoImgEl.title = altText;
+    }
     updateProgress();
     screenContainer.innerHTML = "";
 
