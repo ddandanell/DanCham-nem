@@ -20,7 +20,8 @@
       --input-radius: 8px;
       --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
       --content-max-width: 820px;
-      --section-gap: 18px;
+      --section-gap: 28px;
+      --focus-ring: 0 0 0 3px rgba(200, 16, 46, 0.18);
     }
 
     * {
@@ -37,6 +38,8 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
       background: radial-gradient(circle at top, #ffffff 0, #f5f7fb 55%, #edf0f8 100%);
       color: var(--text);
     }
@@ -58,6 +61,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
     }
 
     .logo {
@@ -67,8 +71,9 @@
 
     .logo-img {
       display: block;
-      height: 48px;
+      height: 52px;
       width: auto;
+      filter: drop-shadow(0 4px 10px rgba(200, 16, 46, 0.25));
     }
 
     .lang-toggle {
@@ -96,7 +101,7 @@
     }
 
     .progress-shell {
-      padding: 10px 24px 0 24px;
+      padding: 18px 24px 4px 24px;
       flex-shrink: 0;
     }
 
@@ -150,7 +155,7 @@
       display: flex;
       align-items: stretch;
       justify-content: center;
-      padding: 20px;
+      padding: 32px 24px 48px;
     }
 
     #survey-form {
@@ -167,20 +172,27 @@
 
     .card {
       background: var(--card-bg);
-      border-radius: 18px;
-      padding: 26px 26px 22px;
+      border-radius: 22px;
+      padding: 36px 44px 34px;
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(226, 232, 240, 0.9);
+      border: 1px solid rgba(226, 232, 240, 0.85);
       display: flex;
       flex-direction: column;
       min-height: 0;
+      gap: 18px;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 18px 46px rgba(15, 23, 42, 0.12);
+      transform: translateY(-2px);
     }
 
     .screen {
       width: 100%;
       text-align: left;
       display: none;
-      animation: fadeIn 0.25s ease-out;
+      animation: riseIn 0.35s ease;
     }
 
     .screen.active {
@@ -188,12 +200,12 @@
     }
 
     .screen-header {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       border-bottom: 1px dashed #e2e8f0;
-      padding-bottom: 14px;
+      padding-bottom: 18px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .screen-header-top {
@@ -215,14 +227,15 @@
     }
 
     .screen-section-title {
-      font-size: 14px;
-      color: #64748b;
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.6;
     }
 
     .welcome-title {
-      font-size: clamp(26px, 4.6vw, 32px);
+      font-size: clamp(28px, 4.6vw, 36px);
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -237,31 +250,25 @@
       background: #fff1f2;
     }
 
-    .welcome-subtitle {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #0f172a;
-    }
-
     .welcome-body {
-      font-size: 14px;
-      line-height: 1.7;
-      max-width: 640px;
-      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.85;
+      max-width: 660px;
+      color: #475569;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 14px;
     }
 
     .welcome-highlight {
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 14px 16px;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       font-size: 13px;
       color: #475569;
-      margin-top: 10px;
+      margin-top: 12px;
+      line-height: 1.8;
     }
 
     .welcome-highlight strong {
@@ -313,64 +320,41 @@
     }
 
     .question-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 5px;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
       color: #0f172a;
+      line-height: 1.45;
     }
 
     .question-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 14px;
+      font-size: 15px;
+      color: #52607b;
+      margin-bottom: 22px;
       max-width: 640px;
-    }
-
-    .question-body-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
-      gap: 22px;
-      align-items: flex-start;
-      margin-bottom: var(--section-gap);
+      line-height: 1.8;
     }
 
     .question-main {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-
-    .question-side {
-      font-size: 12px;
-      color: #64748b;
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 10px 12px;
-      border: 1px dashed #d8e0f0;
-    }
-
-    .question-side strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #0f172a;
+      gap: 16px;
+      margin-bottom: var(--section-gap);
     }
 
     .options {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 14px;
       margin-bottom: 4px;
     }
 
     .option-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 11px 13px;
-      border-radius: 12px;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 14px;
       border: 1px solid var(--border-soft);
       cursor: pointer;
       transition:
@@ -379,6 +363,7 @@
         box-shadow 0.15s ease,
         transform 0.08s ease;
       background: #ffffff;
+      line-height: 1.6;
     }
 
     .option-row input[type="radio"],
@@ -393,7 +378,7 @@
     }
 
     .option-label {
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .option-row:hover {
@@ -406,15 +391,15 @@
     .option-row.selected {
       border-color: var(--btn-red);
       background: #fff1f2;
-      box-shadow: 0 6px 14px rgba(248, 113, 113, 0.18);
+      box-shadow: 0 10px 24px rgba(248, 113, 113, 0.2);
     }
 
     .rating-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
 
     .rating-labels {
@@ -427,7 +412,7 @@
     }
 
     .rating-labels span {
-      max-width: 40%;
+      max-width: 42%;
     }
 
     .rating-scale-caption {
@@ -441,19 +426,20 @@
       padding: 7px 10px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #ffffff;
-      text-align: center;
-      font-size: 13px;
+      font-size: 12px;
+      color: #7b879c;
+      margin-bottom: 14px;
       cursor: pointer;
       transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
         transform 0.08s ease, box-shadow 0.12s ease;
-    }
-
-    .rating-button.selected {
-      background: var(--btn-red);
-      border-color: var(--btn-red);
-      color: #ffffff;
-      box-shadow: 0 6px 12px rgba(248, 113, 113, 0.3);
+      min-width: 42px;
+      min-height: 42px;
+      padding: 8px 14px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+      font-size: 15px;
       transform: translateY(-1px);
     }
 
@@ -463,34 +449,33 @@
       border-radius: var(--input-radius);
       border: 1px solid var(--input-border);
       background: var(--input-bg);
-      font-size: 14px;
-      resize: vertical;
+      box-shadow: 0 10px 20px rgba(248, 113, 113, 0.3);
+      transform: translateY(-2px);
       min-height: 90px;
       line-height: 1.5;
-    }
-
-    input[type="text"],
+    textarea {
     input[type="email"],
     input[type="tel"] {
       width: 100%;
       padding: 11px 12px;
       border-radius: var(--input-radius);
-      border: 1px solid var(--input-border);
+      font-size: 15px;
       background: var(--input-bg);
-      font-size: 14px;
-      line-height: 1.4;
+      min-height: 120px;
+      line-height: 1.6;
     }
 
     textarea::placeholder,
     input::placeholder {
       color: #9ca3af;
     }
-
+      padding: 12px 14px;
     .contact-grid {
       display: grid;
       gap: 14px;
-    }
-
+      font-size: 15px;
+      line-height: 1.4;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     .contact-field label {
       display: flex;
       flex-direction: column;
@@ -526,25 +511,36 @@
       display: block;
     }
 
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--btn-red);
+      box-shadow: var(--focus-ring);
+    }
+
     .helper-text {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 6px;
+      line-height: 1.7;
     }
 
     .small-hint {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 2px;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+      line-height: 1.6;
     }
 
     .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 18px;
-      gap: 8px;
-      padding-top: 16px;
+      margin-top: 26px;
+      gap: 12px;
+      padding-top: 22px;
       border-top: 1px dashed #e2e8f0;
     }
 
@@ -561,8 +557,8 @@
       justify-content: center;
       border-radius: 999px;
       border: 1px solid transparent;
-      padding: 9px 18px;
-      font-size: 14px;
+      padding: 11px 22px;
+      font-size: 15px;
       cursor: pointer;
       background: #e5e7eb;
       color: var(--text);
@@ -570,6 +566,7 @@
         box-shadow 0.15s ease, transform 0.08s ease;
       min-width: 90px;
       text-align: center;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
     }
 
     .btn-primary {
@@ -582,7 +579,7 @@
     .btn-primary:hover:not(:disabled) {
       background: #a80e27;
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(200, 16, 46, 0.45);
+      box-shadow: 0 14px 28px rgba(200, 16, 46, 0.45);
     }
 
     .btn-primary:disabled {
@@ -603,34 +600,36 @@
     }
 
     .thank-you-title {
-      font-size: clamp(24px, 3.8vw, 30px);
+      font-size: clamp(26px, 3.8vw, 34px);
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       color: #0f172a;
+      line-height: 1.5;
     }
 
     .thank-you-body {
-      font-size: 14px;
-      color: var(--muted);
-      max-width: 540px;
-      line-height: 1.7;
-      margin-bottom: 24px;
+      font-size: 16px;
+      color: #475569;
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 26px;
     }
 
     .thank-you-panel {
-      margin-top: 4px;
-      padding: 12px 14px;
-      border-radius: 12px;
+      margin-top: 6px;
+      padding: 14px 18px;
+      border-radius: 14px;
       border: 1px solid #e2e8f0;
       background: #f8fafc;
-      font-size: 12px;
+      font-size: 13px;
       color: #475569;
+      line-height: 1.75;
     }
 
     footer {
       border-top: 1px solid rgba(226, 232, 240, 0.9);
-      padding: 10px 24px 12px;
-      font-size: 12px;
+      padding: 16px 24px 22px;
+      font-size: 13px;
       color: var(--muted);
       background: #ffffff;
       flex-shrink: 0;
@@ -664,10 +663,10 @@
       text-decoration: underline;
     }
 
-    @keyframes fadeIn {
+    @keyframes riseIn {
       from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(18px);
       }
       to {
         opacity: 1;
@@ -695,8 +694,8 @@
       }
 
       .card {
-        padding: 18px 16px 18px;
-        border-radius: 14px;
+        padding: 24px 20px 26px;
+        border-radius: 18px;
       }
 
       .footer-inner {
@@ -763,7 +762,7 @@
       action="https://formsubmit.co/ajax/daviddandanell@gmail.com"
       enctype="multipart/form-data"
     >
-      <input type="hidden" name="_subject" value="DanCham Member Survey 2024 submission">
+      <input type="hidden" name="_subject" value="DanCham Member Survey 2025 submission">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://dancham.id/">
       <input type="hidden" name="_captcha" value="false">
@@ -1012,14 +1011,15 @@
       finish: "Send answers",
       optional: "(optional)",
       required: "Required",
-      welcomeTitle: "DanCham Member Survey 2024",
-      welcomeSubtitle: "Help shape a more meaningful Nimbus question space.",
+      questionLabel: "Question",
+      welcomeTitle: "DanCham Member Survey 2025",
+      welcomeSubtitle: "Help us create a more active and meaningful member community.",
       welcomeBody1:
-        "We're refreshing the Nimbus question area so it becomes an even more active and meaningful space for members.",
+        "We're listening! Tell us what you think about DanCham so we can make it even better for you and all our members.",
       welcomeBody2:
-        "Share your suggestions so we focus on the improvements that matter most before we roll the changes out across our wider network.",
+        "Your honest feedback helps us understand what's working and what could be improved – from events to communication to member benefits.",
       welcomeBody3:
-        "We use the results to improve our events, communication and the overall value of your membership.",
+        "This takes about 5 minutes and you can choose to stay anonymous or share your details if you'd like us to follow up.",
       thankYou: {
         title: "Thank you for helping us improve DanCham",
         body:
@@ -1047,25 +1047,26 @@
       logoAlt: "DanCham – Dansk-Indonesisk Handelskammer",
       progressStep: (step, total) => `Trin ${step} af ${total}`,
       progressExplainer: "Det tager ca. 3–5 minutter at gennemføre.",
-      next: "Næste",
+      next: "�Næste",
       back: "Tilbage",
       finish: "Send svar",
       optional: "(valgfrit)",
       required: "Obligatorisk",
-      welcomeTitle: "DanCham Medlemsundersøgelse 2024",
-      welcomeSubtitle: "Hjælp os med at gøre Nimbus-spørgeområdet endnu mere meningsfuldt.",
+      questionLabel: "Spørgsmål",
+      welcomeTitle: "DanCham Medlemsundersøgelse 2025",
+      welcomeSubtitle: "Hjælp os med at skabe et mere aktivt og meningsfuldt fællesskab for medlemmerne.",
       welcomeBody1:
-        "Vi er i gang med at forny Nimbus-spørgeområdet, så det bliver et endnu mere aktivt og meningsfuldt mødested for medlemmerne.",
+        "Vi lytter! Fortæl os, hvad du synes om DanCham, så vi kan gøre det endnu bedre for dig og alle vores medlemmer.",
       welcomeBody2:
-        "Del dine idéer, så vi prioriterer de forbedringer, der betyder mest, før vi ruller ændringerne ud i vores bredere netværk.",
+        "Din ærlige feedback hjælper os med at forstå, hvad der fungerer godt, og hvad vi kan forbedre – fra arrangementer til kommunikation og medlemsfordele.",
       welcomeBody3:
-        "Vi bruger resultaterne til at forbedre arrangementer, kommunikation og værdien af medlemskabet.",
+        "Det tager cirka 5 minutter, og du kan vælge at forblive anonym eller dele dine kontaktoplysninger, hvis du gerne vil have os til at følge op.",
       thankYou: {
-        title: "Tak fordi du hjælper os med at forbedre DanCham",
+        title: "Tak for din hjælp til at forbedre DanCham",
         body:
-          "Dine svar er gemt. Vi bruger feedbacken til at forme fremtidige arrangementer, kommunikation og tilbud, så DanCham kan blive endnu mere relevant for dig.",
+          "Dine svar er blevet registreret. Vi bruger denne feedback til at forme fremtidige arrangementer, kommunikation og services, så DanCham kan blive endnu mere relevant for dig.",
         panel:
-          "Du kan nu lukke vinduet. Hvis du har skrevet noget, der kræver opfølgning, kan det være, vi kontakter dig via dine sædvanlige DanCham-kanaler."
+          "Du kan lukke dette vindue nu. Hvis du har delt noget, der kræver opfølgning, kontakter vi dig gennem dine sædvanlige DanCham-kanaler."
       },
       contact: {
         title: "Del dine oplysninger, så vi kan følge op",
@@ -1080,8 +1081,211 @@
         error:
           "Udfyld venligst navn, en gyldig email og dit WhatsApp-nummer, før du sender."
       },
-      // For now we reuse English question texts; you can localize titles later if you wish
-      questions: QUESTIONS_EN
+      questions: [
+        {
+          id: "overall_satisfaction",
+          labelIndex: "1",
+          name: "overall_satisfaction",
+          type: "rating-1-5",
+          required: true,
+          title: "Hvor tilfreds er du overordnet set med dit DanCham-medlemskab?",
+          subtitle: "",
+          ratingMin: 1,
+          ratingMax: 5,
+          ratingLeft: "Meget utilfreds",
+          ratingRight: "Meget tilfreds",
+          kind: "rating"
+        },
+        {
+          id: "reason_for_joining",
+          labelIndex: "2",
+          name: "reason_for_joining",
+          type: "single-choice",
+          required: true,
+          title: "Hvad var din hovedårsag til at blive medlem af DanCham?",
+          subtitle: "",
+          options: [
+            "Netværk",
+            "Arrangementer",
+            "Virksomhedens synlighed",
+            "Viden og inspiration",
+            "Andet"
+          ],
+          kind: "single"
+        },
+        {
+          id: "expectations_met",
+          labelIndex: "3",
+          name: "expectations_met",
+          type: "single-choice",
+          required: true,
+          title: "Lever DanCham op til dine forventninger?",
+          subtitle: "",
+          options: ["Ja", "Delvist", "Nej"],
+          kind: "single"
+        },
+        {
+          id: "value_for_money",
+          labelIndex: "4",
+          name: "value_for_money",
+          type: "rating-1-5",
+          required: true,
+          title: "Hvor meget værdi oplever du i forhold til medlemskontingente?",
+          subtitle: "",
+          ratingMin: 1,
+          ratingMax: 5,
+          ratingLeft: "Mindre end forventet",
+          ratingRight: "Mere end forventet",
+          kind: "rating"
+        },
+        {
+          id: "activities_participation",
+          labelIndex: "5",
+          name: "activities_participation",
+          type: "multi-choice",
+          required: false,
+          title: "Hvilke aktiviteter deltager du oftest i? (Vælg alle relevante)",
+          subtitle: "",
+          options: [
+            "Netværksaftener",
+            "Rundbordsmøder / morgenmøder",
+            "Sociale arrangementer (fx julefrokost)",
+            "Konferencer / webinarer",
+            "Ingen (endnu)"
+          ],
+          kind: "multi"
+        },
+        {
+          id: "event_quality",
+          labelIndex: "6",
+          name: "event_quality",
+          type: "rating-1-5",
+          required: true,
+          title: "Hvordan vurderer du kvaliteten af DanChams arrangementer?",
+          subtitle: "",
+          ratingMin: 1,
+          ratingMax: 5,
+          ratingLeft: "Meget dårlig",
+          ratingRight: "Fremragende",
+          kind: "rating"
+        },
+        {
+          id: "event_improvements",
+          labelIndex: "7",
+          name: "event_improvements",
+          type: "text",
+          required: false,
+          title: "Hvad kunne gøre arrangementerne endnu bedre? (valgfrit)",
+          subtitle: "",
+          placeholder: "",
+          kind: "text"
+        },
+        {
+          id: "business_social_balance",
+          labelIndex: "8",
+          name: "business_social_balance",
+          type: "single-choice",
+          required: true,
+          title: "Synes du, der er den rette balance mellem forretningsindhold og social interaktion ved DanCham-arrangementer?",
+          subtitle: "",
+          options: [
+            "For meget fokus på forretning",
+            "God balance",
+            "For lidt forretning – for meget socialt",
+            "Ved ikke"
+          ],
+          kind: "single"
+        },
+        {
+          id: "missing_content",
+          labelIndex: "9",
+          name: "missing_content",
+          type: "text",
+          required: false,
+          title: "Hvilke typer arrangementer eller temaer savner du? (valgfrit)",
+          subtitle: "",
+          placeholder: "Fx bæredygtighed, kultur, branchespecifikke netværk, iværksætteri",
+          kind: "text"
+        },
+        {
+          id: "communication_frequency",
+          labelIndex: "10",
+          name: "communication_frequency",
+          type: "single-choice",
+          required: true,
+          title: "Hvor ofte læser du DanChams nyhedsbrev og følger med på web/sociale medier?",
+          subtitle: "",
+          options: [
+            "Hver gang",
+            "Nogle gange",
+            "Sjældent",
+            "Jeg modtager ikke nyhedsbrevet"
+          ],
+          kind: "single"
+        },
+        {
+          id: "missing_information",
+          labelIndex: "11",
+          name: "missing_information",
+          type: "text",
+          required: false,
+          title: "Er der information, du savner i vores kommunikation? (valgfrit)",
+          subtitle: "",
+          placeholder: "",
+          kind: "text"
+        },
+        {
+          id: "nps_score",
+          labelIndex: "12",
+          name: "nps_score",
+          type: "rating-0-10",
+          required: true,
+          title: "På en skala fra 0-10: Hvor sandsynligt er det, at du vil anbefale DanCham til en kollega eller partner?",
+          subtitle: "",
+          ratingMin: 0,
+          ratingMax: 10,
+          ratingLeft: "Meget usandsynligt",
+          ratingRight: "Meget sandsynligt",
+          kind: "rating"
+        },
+        {
+          id: "nps_reason",
+          labelIndex: "13",
+          name: "nps_reason",
+          type: "text",
+          required: false,
+          title: "Hvorfor? (valgfrit)",
+          subtitle: "",
+          placeholder: "",
+          kind: "text"
+        },
+        {
+          id: "additional_comments",
+          labelIndex: "14",
+          name: "additional_comments",
+          type: "text",
+          required: false,
+          title: "Har du andre kommentarer eller forslag, der kan hjælpe DanCham med at blive en endnu bedre organisation?",
+          subtitle: "",
+          placeholder: "",
+          kind: "text"
+        },
+        {
+          id: "share_details",
+          labelIndex: "15",
+          name: "share_details",
+          type: "single-choice",
+          required: true,
+          title: "Vil du gerne have, at vi følger op med dig om din feedback?",
+          subtitle:
+            "Vælg \"Nej\" for at holde undersøgelsen anonym. Vælg \"Ja\", hvis du er åben for en kort opfølgningssamtale.",
+          options: [
+            "Ja, I må gerne kontakte mig",
+            "Nej, jeg vil hellere forblive anonym"
+          ],
+          kind: "single"
+        }
+      ]
     }
   };
 
@@ -1089,6 +1293,7 @@
   const STORAGE_KEY = "dancham-member-survey-2024";
   const SHARE_DETAILS_ID = "share_details";
   const SHARE_DETAILS_YES = "Yes, you can reach out to me";
+  const SHARE_DETAILS_YES_DA = "Ja, I må gerne kontakte mig";
   const CONTACT_STEP_INDEX = TOTAL_QUESTIONS + 1;
   const THANK_YOU_STEP_INDEX = CONTACT_STEP_INDEX + 1;
 
@@ -1130,7 +1335,7 @@
 
   function shouldCollectContactDetails() {
     const value = typeof answers[SHARE_DETAILS_ID] === "string" ? answers[SHARE_DETAILS_ID].trim() : "";
-    return value === SHARE_DETAILS_YES;
+    return value === SHARE_DETAILS_YES || value === SHARE_DETAILS_YES_DA;
   }
 
   function loadAnswers() {
@@ -1499,7 +1704,7 @@
       <div class="screen-header">
         <div class="screen-header-top">
           <div class="question-meta-row">
-            <span class="question-index-pill">Question ${indexDisplay}</span>
+            <span class="question-index-pill">${s.questionLabel} ${indexDisplay}</span>
             <div class="question-meta">
               ${metaLabel}
             </div>
@@ -1510,10 +1715,6 @@
       ${q.subtitle ? `<div class="question-subtitle">${q.subtitle}</div>` : ""}
       <div class="question-body-layout">
         <div class="question-main" id="question-body"></div>
-        <div class="question-side">
-          <strong>Note</strong>
-          <span>Answer as honestly as you can – that gives us the clearest signal on where to improve.</span>
-        </div>
       </div>
       <div class="nav">
         <div class="nav-left">
