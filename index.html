@@ -538,11 +538,6 @@
     .contact-error.active {
       display: block;
     }
-      font-size: 13px;
-      color: #64748b;
-      margin-top: 6px;
-      line-height: 1.7;
-    }
 
     .small-hint {
       font-size: 12px;
@@ -833,7 +828,7 @@
     <form
       id="survey-form"
       method="POST"
-      action="https://formsubmit.co/ajax/Daviddandanell@gmail.com"
+      action="https://formsubmit.co/ajax/daviddandanell@gmail.com"
       enctype="multipart/form-data"
     >
       <input type="hidden" name="_subject" value="DanCham Member Survey 2025 Submission">
@@ -1010,44 +1005,19 @@
       kind: "single"
     },
     {
-      id: "missing_information",
+      id: "additional_feedback",
       labelIndex: "11",
-      name: "missing_information",
+      name: "additional_feedback",
       type: "text",
       required: false,
-      title: "Is there information you're missing in our communication? (optional)",
-      subtitle: "",
-      placeholder: "",
-      kind: "text"
-    },
-    {
-      id: "nps_score",
-      labelIndex: "12",
-      name: "nps_score",
-      type: "rating-0-10",
-      required: true,
-      title: "On a scale of 0-10: How likely are you to recommend DanCham to a colleague or partner?",
-      subtitle: "",
-      ratingMin: 0,
-      ratingMax: 10,
-      ratingLeft: "Very unlikely",
-      ratingRight: "Very likely",
-      kind: "rating"
-    },
-    {
-      id: "nps_reason",
-      labelIndex: "13",
-      name: "nps_reason",
-      type: "text",
-      required: false,
-      title: "Why? (optional)",
+      title: "Any additional feedback or comments? (optional)",
       subtitle: "",
       placeholder: "",
       kind: "text"
     },
     {
       id: "additional_comments",
-      labelIndex: "14",
+      labelIndex: "12",
       name: "additional_comments",
       type: "text",
       required: false,
@@ -1058,7 +1028,7 @@
     },
     {
       id: "share_details",
-      labelIndex: "15",
+      labelIndex: "13",
       name: "share_details",
       type: "single-choice",
       required: true,
@@ -1297,44 +1267,19 @@
           kind: "single"
         },
         {
-          id: "missing_information",
+          id: "additional_feedback",
           labelIndex: "11",
-          name: "missing_information",
+          name: "additional_feedback",
           type: "text",
           required: false,
-          title: "Er der information, du savner i vores kommunikation? (valgfrit)",
-          subtitle: "",
-          placeholder: "",
-          kind: "text"
-        },
-        {
-          id: "nps_score",
-          labelIndex: "12",
-          name: "nps_score",
-          type: "rating-0-10",
-          required: true,
-          title: "På en skala fra 0-10: Hvor sandsynligt er det, at du vil anbefale DanCham til en kollega eller partner?",
-          subtitle: "",
-          ratingMin: 0,
-          ratingMax: 10,
-          ratingLeft: "Meget usandsynligt",
-          ratingRight: "Meget sandsynligt",
-          kind: "rating"
-        },
-        {
-          id: "nps_reason",
-          labelIndex: "13",
-          name: "nps_reason",
-          type: "text",
-          required: false,
-          title: "Hvorfor? (valgfrit)",
+          title: "Har du yderligere feedback eller kommentarer? (valgfrit)",
           subtitle: "",
           placeholder: "",
           kind: "text"
         },
         {
           id: "additional_comments",
-          labelIndex: "14",
+          labelIndex: "12",
           name: "additional_comments",
           type: "text",
           required: false,
@@ -1345,7 +1290,7 @@
         },
         {
           id: "share_details",
-          labelIndex: "15",
+          labelIndex: "13",
           name: "share_details",
           type: "single-choice",
           required: true,
