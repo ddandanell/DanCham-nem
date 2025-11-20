@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DanCham Member Survey 2024</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --text: #111111;
+      --btn-red: #c8102e;
+      --border: #dddddd;
+      --border-soft: #e4e8f0;
+      --muted: #666666;
+      --progress-bg: #e3e7f0;
+      --progress-fill: #c8102e;
+      --input-bg: #ffffff;
+      --input-border: #ced4e0;
+      --input-radius: 8px;
+      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --content-max-width: 820px;
+      --section-gap: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0, #f5f7fb 55%, #edf0f8 100%);
+      color: var(--text);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.9);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #c8102e, #f94f66);
+      box-shadow: 0 6px 14px rgba(200, 16, 46, 0.45);
+    }
+
+    .logo-text-sub {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      overflow: hidden;
+      font-size: 13px;
+      background: #f1f5f9;
+    }
+
+    .lang-toggle button {
+      border: none;
+      background: transparent;
+      padding: 6px 13px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .lang-toggle button.active {
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 600;
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.5);
+    }
+
+    .progress-shell {
+      padding: 10px 24px 0 24px;
+      flex-shrink: 0;
+    }
+
+    .progress-bar-wrapper {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-label span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .progress-bar {
+      height: 8px;
+      width: 100%;
+      border-radius: 999px;
+      background: var(--progress-bg);
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c8102e, #f97373);
+      transition: width 0.25s ease;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #survey-form {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .screen-shell {
+      width: 100%;
+      max-width: var(--content-max-width);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 26px 26px 22px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .screen {
+      width: 100%;
+      text-align: left;
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .screen-header {
+      margin-bottom: 20px;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .screen-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .screen-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #e2e8f0;
+    }
+
+    .screen-section-title {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .welcome-title {
+      font-size: clamp(26px, 4.6vw, 32px);
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .welcome-title .hand {
+      font-size: 0.9em;
+      border-radius: 999px;
+      border: 2px solid var(--btn-red);
+      padding: 4px 10px;
+      line-height: 1;
+      background: #fff1f2;
+    }
+
+    .welcome-subtitle {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .welcome-body {
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 640px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .welcome-highlight {
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #475569;
+      margin-top: 10px;
+    }
+
+    .welcome-highlight strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .question-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .question-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-index-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 500;
+    }
+
+    .required-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .required-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--btn-red);
+    }
+
+    .question-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #0f172a;
+    }
+
+    .question-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      max-width: 640px;
+    }
+
+    .question-body-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
+      gap: 22px;
+      align-items: flex-start;
+      margin-bottom: var(--section-gap);
+    }
+
+    .question-main {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .question-side {
+      font-size: 12px;
+      color: #64748b;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px dashed #d8e0f0;
+    }
+
+    .question-side strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #0f172a;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      cursor: pointer;
+      transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.08s ease;
+      background: #ffffff;
+    }
+
+    .option-row input[type="radio"],
+    .option-row input[type="checkbox"] {
+      flex-shrink: 0;
+    }
+
+    .option-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .option-label {
+      font-size: 14px;
+    }
+
+    .option-row:hover {
+      background: #f9fafb;
+      border-color: #cbd5f5;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+      transform: translateY(-1px);
+    }
+
+    .option-row.selected {
+      border-color: var(--btn-red);
+      background: #fff1f2;
+      box-shadow: 0 6px 14px rgba(248, 113, 113, 0.18);
+    }
+
+    .rating-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .rating-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      gap: 10px;
+    }
+
+    .rating-labels span {
+      max-width: 40%;
+    }
+
+    .rating-scale-caption {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .rating-button {
+      min-width: 32px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      text-align: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+        transform 0.08s ease, box-shadow 0.12s ease;
+    }
+
+    .rating-button.selected {
+      background: var(--btn-red);
+      border-color: var(--btn-red);
+      color: #ffffff;
+      box-shadow: 0 6px 12px rgba(248, 113, 113, 0.3);
+      transform: translateY(-1px);
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: var(--input-radius);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      font-size: 14px;
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.5;
+    }
+
+    textarea::placeholder,
+    input::placeholder {
+      color: #9ca3af;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .small-hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      gap: 8px;
+      padding-top: 16px;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 9px 18px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #e5e7eb;
+      color: var(--text);
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+        box-shadow 0.15s ease, transform 0.08s ease;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--btn-red);
+      color: #ffffff;
+      border-color: var(--btn-red);
+      box-shadow: 0 8px 18px rgba(200, 16, 46, 0.4);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #a80e27;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(200, 16, 46, 0.45);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-ghost {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: #e5e7eb;
+    }
+
+    .thank-you-title {
+      font-size: clamp(24px, 3.8vw, 30px);
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .thank-you-body {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .thank-you-panel {
+      margin-top: 4px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    footer {
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      padding: 10px 24px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .footer-inner {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-company {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-address {
+      white-space: nowrap;
+    }
+
+    .footer-link a {
+      color: var(--btn-red);
+      text-decoration: none;
+    }
+
+    .footer-link a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .question-body-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 780px) {
+      header {
+        padding: 12px 16px;
+      }
+
+      .progress-shell {
+        padding: 8px 16px 0 16px;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 18px 16px 18px;
+        border-radius: 14px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-address {
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .nav-left,
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">
+      <div class="logo-mark" aria-hidden="true"></div>
+      <div>
+        <span id="logo-text">DanCham</span>
+        <span class="logo-text-sub">Member Survey 2024</span>
+      </div>
+    </div>
+    <div class="lang-toggle" aria-label="Language">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <button type="button" data-lang="da">DA</button>
+    </div>
+  </header>
+
+  <div class="progress-shell">
+    <div class="progress-bar-wrapper">
+      <div class="progress-label" id="progress-label">
+        <span><span class="progress-dot"></span><span>Loading…</span></span>
+        <span id="progress-extra"></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- IMPORTANT: replace your-random-string with your real FormSubmit ID -->
+    <form
+      id="survey-form"
+      method="POST"
+      action="https://formsubmit.co/ajax/your-random-string"
+      enctype="multipart/form-data"
+    >
+      <input type="hidden" name="_subject" value="DanCham Member Survey 2024 submission">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://dancham.id/">
+
+      <div class="screen-shell">
+        <div class="card">
+          <div id="screen-container"></div>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-company">
+        Danish-Indonesian Business Chamber
+      </div>
+      <div class="footer-address">
+        Alamanda Tower 23rd Floor Unit B, Jl. TB Simatupang Kav 23-24, 12430 Jakarta, Indonesia
+      </div>
+      <div class="footer-link">
+        <a href="https://dancham.id/" target="_blank" rel="noopener noreferrer">
+          dancham.id
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Configuration: questions (EN) exactly as specified
+  const QUESTIONS_EN = [
+    {
+      id: "overall_satisfaction",
+      labelIndex: "1",
+      name: "overall_satisfaction",
+      type: "rating-1-5",
+      required: true,
+      title: "How satisfied are you overall with your DanCham membership?",
+      subtitle: "",
+      ratingMin: 1,
+      ratingMax: 5,
+      ratingLeft: "Very dissatisfied",
+      ratingRight: "Very satisfied",
+      kind: "rating"
+    },
+    {
+      id: "reason_for_joining",
+      labelIndex: "2",
+      name: "reason_for_joining",
+      type: "single-choice",
+      required: true,
+      title: "What was your main reason for joining DanCham?",
+      subtitle: "",
+      options: [
+        "Networking",
+        "Events",
+        "Company visibility",
+        "Knowledge and inspiration",
+        "Other"
+      ],
+      kind: "single"
+    },
+    {
+      id: "expectations_met",
+      labelIndex: "3",
+      name: "expectations_met",
+      type: "single-choice",
+      required: true,
+      title: "Does DanCham live up to your expectations?",
+      subtitle: "",
+      options: ["Yes", "Partially", "No"],
+      kind: "single"
+    },
+    {
+      id: "value_for_money",
+      labelIndex: "4",
+      name: "value_for_money",
+      type: "rating-1-5",
+      required: true,
+      title: "How much value do you experience relative to the membership fee?",
+      subtitle: "",
+      ratingMin: 1,
+      ratingMax: 5,
+      ratingLeft: "Less than expected",
+      ratingRight: "More than expected",
+      kind: "rating"
+    },
+    {
+      id: "activities_participation",
+      labelIndex: "5",
+      name: "activities_participation",
+      type: "multi-choice",
+      required: false,
+      title: "Which activities do you participate in most often? (Select all that apply)",
+      subtitle: "",
+      options: [
+        "Networking evenings",
+        "Roundtable meetings / business breakfast",
+        "Social events (e.g. Christmas lunch)",
+        "Conferences / webinars",
+        "None (yet)"
+      ],
+      kind: "multi"
+    },
+    {
+      id: "event_quality",
+      labelIndex: "6",
+      name: "event_quality",
+      type: "rating-1-5",
+      required: true,
+      title: "How do you rate the quality of DanCham's events?",
+      subtitle: "",
+      ratingMin: 1,
+      ratingMax: 5,
+      ratingLeft: "Very poor",
+      ratingRight: "Excellent",
+      kind: "rating"
+    },
+    {
+      id: "event_improvements",
+      labelIndex: "7",
+      name: "event_improvements",
+      type: "text",
+      required: false,
+      title: "What could make the events even better? (optional)",
+      subtitle: "",
+      placeholder: "",
+      kind: "text"
+    },
+    {
+      id: "business_social_balance",
+      labelIndex: "8",
+      name: "business_social_balance",
+      type: "single-choice",
+      required: true,
+      title: "Do you think there is the right balance between business content and social interaction at DanCham events?",
+      subtitle: "",
+      options: [
+        "Too much focus on business",
+        "Good balance",
+        "Too little business – too much socializing",
+        "Don't know"
+      ],
+      kind: "single"
+    },
+    {
+      id: "missing_content",
+      labelIndex: "9",
+      name: "missing_content",
+      type: "text",
+      required: false,
+      title: "What types of events or themes do you miss? (optional)",
+      subtitle: "",
+      placeholder: "E.g. sustainability, culture, sector-specific networks, entrepreneurship",
+      kind: "text"
+    },
+    {
+      id: "communication_frequency",
+      labelIndex: "10",
+      name: "communication_frequency",
+      type: "single-choice",
+      required: true,
+      title: "How often do you read DanCham's newsletter and follow web/social media?",
+      subtitle: "",
+      options: [
+        "Every time",
+        "Sometimes",
+        "Rarely",
+        "I don't receive the newsletter"
+      ],
+      kind: "single"
+    },
+    {
+      id: "missing_information",
+      labelIndex: "11",
+      name: "missing_information",
+      type: "text",
+      required: false,
+      title: "Is there information you're missing in our communication? (optional)",
+      subtitle: "",
+      placeholder: "",
+      kind: "text"
+    },
+    {
+      id: "nps_score",
+      labelIndex: "12",
+      name: "nps_score",
+      type: "rating-0-10",
+      required: true,
+      title: "On a scale of 0-10: How likely are you to recommend DanCham to a colleague or partner?",
+      subtitle: "",
+      ratingMin: 0,
+      ratingMax: 10,
+      ratingLeft: "Very unlikely",
+      ratingRight: "Very likely",
+      kind: "rating"
+    },
+    {
+      id: "nps_reason",
+      labelIndex: "13",
+      name: "nps_reason",
+      type: "text",
+      required: false,
+      title: "Why? (optional)",
+      subtitle: "",
+      placeholder: "",
+      kind: "text"
+    },
+    {
+      id: "additional_comments",
+      labelIndex: "14",
+      name: "additional_comments",
+      type: "text",
+      required: false,
+      title: "Do you have other comments or suggestions that can help DanCham become an even better organization?",
+      subtitle: "",
+      placeholder: "",
+      kind: "text"
+    }
+  ];
+
+  const STRINGS = {
+    en: {
+      logo: "DanCham",
+      progressStep: (step, total) => `Step ${step} of ${total}`,
+      progressExplainer: "Takes about 3–5 minutes to complete.",
+      next: "Next",
+      back: "Back",
+      finish: "Send answers",
+      optional: "(optional)",
+      required: "Required",
+      welcomeTitle: "DanCham Member Survey 2024",
+      welcomeBody1: "Help us make DanCham better! Your answers are anonymous and take only 3–5 minutes.",
+      welcomeBody2: "We use the results to improve our events, communication and the overall value of your membership.",
+      thankYou: {
+        title: "Thank you for helping us improve DanCham",
+        body:
+          "Your answers have been recorded. We will use this feedback to shape future events, communication and services so DanCham can become even more relevant for you.",
+        panel:
+          "You can now close this window. If you have shared something that needs a follow-up, we may contact you through your usual DanCham contact channels."
+      },
+      questions: QUESTIONS_EN
+    },
+    da: {
+      logo: "DanCham",
+      progressStep: (step, total) => `Trin ${step} af ${total}`,
+      progressExplainer: "Det tager ca. 3–5 minutter at gennemføre.",
+      next: "Næste",
+      back: "Tilbage",
+      finish: "Send svar",
+      optional: "(valgfrit)",
+      required: "Obligatorisk",
+      welcomeTitle: "DanCham Medlemsundersøgelse 2024",
+      welcomeBody1: "Hjælp os med at gøre DanCham bedre! Dine svar er anonyme og tager kun 3–5 minutter.",
+      welcomeBody2: "Vi bruger resultaterne til at forbedre arrangementer, kommunikation og værdien af medlemskabet.",
+      thankYou: {
+        title: "Tak fordi du hjælper os med at forbedre DanCham",
+        body:
+          "Dine svar er gemt. Vi bruger feedbacken til at forme fremtidige arrangementer, kommunikation og tilbud, så DanCham kan blive endnu mere relevant for dig.",
+        panel:
+          "Du kan nu lukke vinduet. Hvis du har skrevet noget, der kræver opfølgning, kan det være, vi kontakter dig via dine sædvanlige DanCham-kanaler."
+      },
+      // For now we reuse English question texts; you can localize titles later if you wish
+      questions: QUESTIONS_EN
+    }
+  };
+
+  const TOTAL_QUESTIONS = QUESTIONS_EN.length; // for progress
+  const STORAGE_KEY = "dancham-member-survey-2024";
+
+  let currentLang = "en";
+  let currentStepIndex = 0; // 0 = welcome, 1..TOTAL = questions, TOTAL+1 = thank-you
+  let answers = loadAnswers();
+  let isSubmitting = false;
+
+  const formEl = document.getElementById("survey-form");
+  const screenContainer = document.getElementById("screen-container");
+  const progressLabelEl = document.getElementById("progress-label");
+  const progressExtraEl = document.getElementById("progress-extra");
+  const progressFillEl = document.getElementById("progress-fill");
+  const logoTextEl = document.getElementById("logo-text");
+
+  document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang");
+      if (lang === currentLang) return;
+      currentLang = lang;
+      document
+        .querySelectorAll(".lang-toggle button")
+        .forEach((b) => b.classList.toggle("active", b === btn));
+      render();
+    });
+  });
+
+  function getStrings() {
+    return STRINGS[currentLang];
+  }
+
+  function getQuestions() {
+    return getStrings().questions;
+  }
+
+  function loadAnswers() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return {};
+      return JSON.parse(raw);
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveAnswers() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+    } catch (e) {}
+  }
+
+  function stepCount() {
+    return TOTAL_QUESTIONS;
+  }
+
+  function effectiveStepNumber() {
+    if (currentStepIndex <= 0) return 1;
+    if (currentStepIndex >= TOTAL_QUESTIONS) return TOTAL_QUESTIONS;
+    return currentStepIndex;
+  }
+
+  function updateProgress() {
+    const s = getStrings();
+    const total = stepCount();
+    const step = effectiveStepNumber();
+    progressLabelEl.firstElementChild.lastElementChild.textContent =
+      s.progressStep(step, total);
+    progressExtraEl.textContent = s.progressExplainer;
+    const width = (step / total) * 100;
+    progressFillEl.style.width = width + "%";
+  }
+
+  function render() {
+    const s = getStrings();
+    logoTextEl.textContent = s.logo;
+    updateProgress();
+    screenContainer.innerHTML = "";
+
+    if (currentStepIndex === 0) {
+      renderWelcome();
+    } else if (currentStepIndex === TOTAL_QUESTIONS + 1) {
+      renderThankYou();
+    } else {
+      const q = getQuestions()[currentStepIndex - 1];
+      renderQuestion(q);
+    }
+  }
+
+  function renderWelcome() {
+    const s = getStrings();
+    const screen = document.createElement("div");
+    screen.className = "screen active";
+
+    screen.innerHTML = `
+      <div class="screen-header">
+        <div class="screen-header-top">
+          <span class="screen-tag">DanCham Member Survey 2024</span>
+          <span class="screen-section-title">Anonymous, 3–5 minutes</span>
+        </div>
+      </div>
+      <div class="welcome-title">
+        <span>${s.welcomeTitle}</span>
+        <span class="hand" aria-hidden="true">🤝</span>
+      </div>
+      <div class="welcome-body">
+        <p>${s.welcomeBody1}</p>
+        <p>${s.welcomeBody2}</p>
+      </div>
+      <div class="welcome-highlight">
+        <strong>How we use your feedback</strong>
+        <span>We only use your answers in summary to improve DanCham’s activities and member experience. Individual responses are not shared outside the organizing team.</span>
+      </div>
+      <div class="nav">
+        <div class="nav-left"></div>
+        <div class="nav-right">
+          <button class="btn btn-primary" id="welcome-next">${s.next}</button>
+        </div>
+      </div>
+    `;
+
+    screenContainer.appendChild(screen);
+    document
+      .getElementById("welcome-next")
+      .addEventListener("click", () => {
+        currentStepIndex = 1;
+        render();
+      });
+  }
+
+  function renderThankYou() {
+    const s = getStrings();
+    const screen = document.createElement("div");
+    screen.className = "screen active";
+
+    screen.innerHTML = `
+      <div class="screen-header">
+        <div class="screen-header-top">
+          <span class="screen-tag">Completed</span>
+          <span class="screen-section-title">Your feedback has been sent</span>
+        </div>
+      </div>
+      <div class="thank-you-title">${s.thankYou.title}</div>
+      <div class="thank-you-body">
+        <p>${s.thankYou.body}</p>
+      </div>
+      <div class="thank-you-panel">
+        ${s.thankYou.panel}
+      </div>
+      <div class="nav">
+        <div class="nav-left"></div>
+        <div class="nav-right"></div>
+      </div>
+    `;
+
+    screenContainer.appendChild(screen);
+  }
+
+  function renderQuestion(q) {
+    const s = getStrings();
+    const screen = document.createElement("div");
+    screen.className = "screen active";
+
+    const indexDisplay = `${currentStepIndex}/${TOTAL_QUESTIONS}`;
+    const metaLabel = q.required
+      ? `<span class="required-badge"><span class="required-dot"></span><span>${s.required}</span></span>`
+      : `<span class="helper-text">${s.optional}</span>`;
+
+    let inner = `
+      <div class="screen-header">
+        <div class="screen-header-top">
+          <div class="question-meta-row">
+            <span class="question-index-pill">Question ${indexDisplay}</span>
+            <div class="question-meta">
+              ${metaLabel}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="question-title">${q.title}</div>
+      ${q.subtitle ? `<div class="question-subtitle">${q.subtitle}</div>` : ""}
+      <div class="question-body-layout">
+        <div class="question-main" id="question-body"></div>
+        <div class="question-side">
+          <strong>Note</strong>
+          <span>Answer as honestly as you can – that gives us the clearest signal on where to improve.</span>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="nav-left">
+          <button class="btn btn-ghost" id="btn-back">${s.back}</button>
+        </div>
+        <div class="nav-right">
+          <button class="btn btn-primary" id="btn-next">${
+            currentStepIndex === TOTAL_QUESTIONS ? s.finish : s.next
+          }</button>
+        </div>
+      </div>
+    `;
+
+    screen.innerHTML = inner;
+    screenContainer.appendChild(screen);
+
+    const bodyEl = screen.querySelector("#question-body");
+    const backBtn = screen.querySelector("#btn-back");
+    const nextBtn = screen.querySelector("#btn-next");
+
+    backBtn.disabled = currentStepIndex === 0;
+    backBtn.addEventListener("click", () => {
+      if (isSubmitting) return;
+      if (currentStepIndex > 0) {
+        currentStepIndex -= 1;
+      }
+      render();
+    });
+
+    // Render per type
+    if (q.type === "single-choice") {
+      renderSingleChoice(q, bodyEl);
+    } else if (q.type === "multi-choice") {
+      renderMultiChoice(q, bodyEl);
+    } else if (q.type === "rating-1-5" || q.type === "rating-0-10") {
+      renderRating(q, bodyEl);
+    } else if (q.type === "text") {
+      renderText(q, bodyEl);
+    }
+
+    function isValid() {
+      if (!q.required) return true;
+      const value = answers[q.id];
+
+      if (q.type === "multi-choice") {
+        return Array.isArray(value) && value.length > 0;
+      }
+      if (q.type === "text") {
+        return typeof value === "string" && value.trim().length > 0;
+      }
+      if (q.type === "single-choice") {
+        return typeof value === "string" && value.trim().length > 0;
+      }
+      if (q.type === "rating-1-5" || q.type === "rating-0-10") {
+        return typeof value === "number";
+      }
+      return true;
+    }
+
+    function updateNextBtnState() {
+      nextBtn.disabled = !isValid() || isSubmitting;
+    }
+
+    screen._updateNextBtnState = updateNextBtnState;
+    updateNextBtnState();
+
+    nextBtn.addEventListener("click", async () => {
+      if (!isValid()) return;
+
+      if (currentStepIndex < TOTAL_QUESTIONS) {
+        currentStepIndex += 1;
+        render();
+      } else {
+        // Final step -> submit to FormSubmit via AJAX
+        try {
+          isSubmitting = true;
+          updateNextBtnState();
+
+          const formData = new FormData(formEl);
+          const qList = getQuestions();
+
+          qList.forEach((question) => {
+            const name = question.name || question.id;
+            if (!name) return;
+
+            if (question.type === "multi-choice") {
+              const arr = answers[question.id];
+              if (Array.isArray(arr)) {
+                arr.forEach((v) => {
+                  formData.append(name + "[]", v);
+                });
+              }
+            } else if (
+              question.type === "single-choice"
+            ) {
+              if (typeof answers[question.id] === "string") {
+                formData.set(name, answers[question.id]);
+              }
+            } else if (question.type === "text") {
+              if (typeof answers[question.id] === "string") {
+                formData.set(name, answers[question.id]);
+              }
+            } else if (
+              question.type === "rating-1-5" ||
+              question.type === "rating-0-10"
+            ) {
+              if (typeof answers[question.id] === "number") {
+                formData.set(name, String(answers[question.id]));
+              }
+            }
+          });
+
+          const action = formEl.getAttribute("action") || "";
+          const method = (formEl.getAttribute("method") || "POST").toUpperCase();
+
+          await fetch(action, {
+            method,
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          }).catch(() => {});
+
+          currentStepIndex = TOTAL_QUESTIONS + 1;
+          render();
+        } finally {
+          isSubmitting = false;
+        }
+      }
+    });
+  }
+
+  function renderSingleChoice(q, container) {
+    const existing = answers[q.id];
+    const optionsWrapper = document.createElement("div");
+    optionsWrapper.className = "options";
+
+    q.options.forEach((label) => {
+      const row = document.createElement("label");
+      row.className = "option-row";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = q.name || q.id;
+      input.value = label;
+
+      if (existing === label) {
+        input.checked = true;
+        row.classList.add("selected");
+      }
+
+      input.addEventListener("change", () => {
+        answers[q.id] = label;
+        saveAnswers();
+        optionsWrapper
+          .querySelectorAll(".option-row")
+          .forEach((r) => r.classList.remove("selected"));
+        row.classList.add("selected");
+        container.closest(".screen")._updateNextBtnState();
+      });
+
+      const main = document.createElement("div");
+      main.className = "option-main";
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "option-label";
+      titleSpan.textContent = label;
+      main.appendChild(titleSpan);
+
+      row.appendChild(input);
+      row.appendChild(main);
+      optionsWrapper.appendChild(row);
+    });
+
+    container.appendChild(optionsWrapper);
+  }
+
+  function renderMultiChoice(q, container) {
+    const existing = Array.isArray(answers[q.id]) ? answers[q.id] : [];
+    const optionsWrapper = document.createElement("div");
+    optionsWrapper.className = "options";
+
+    q.options.forEach((label) => {
+      const row = document.createElement("label");
+      row.className = "option-row";
+
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = (q.name || q.id) + "[]";
+      input.value = label;
+
+      if (existing.includes(label)) {
+        input.checked = true;
+        row.classList.add("selected");
+      }
+
+      input.addEventListener("change", () => {
+        const set = new Set(Array.isArray(answers[q.id]) ? answers[q.id] : []);
+        if (input.checked) {
+          set.add(label);
+        } else {
+          set.delete(label);
+        }
+        answers[q.id] = Array.from(set);
+        saveAnswers();
+
+        if (input.checked) row.classList.add("selected");
+        else row.classList.remove("selected");
+
+        container.closest(".screen")._updateNextBtnState();
+      });
+
+      const main = document.createElement("div");
+      main.className = "option-main";
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "option-label";
+      titleSpan.textContent = label;
+      main.appendChild(titleSpan);
+
+      row.appendChild(input);
+      row.appendChild(main);
+      optionsWrapper.appendChild(row);
+    });
+
+    const hint = document.createElement("div");
+    hint.className = "small-hint";
+    hint.textContent = "You can tick more than one box if several options fit.";
+
+    container.appendChild(optionsWrapper);
+    container.appendChild(hint);
+  }
+
+  function renderRating(q, container) {
+    const existing = answers[q.id];
+    const min = q.ratingMin ?? (q.type === "rating-0-10" ? 0 : 1);
+    const max = q.ratingMax ?? (q.type === "rating-0-10" ? 10 : 5);
+
+    const labels = document.createElement("div");
+    labels.className = "rating-labels";
+
+    if (q.type === "rating-0-10") {
+      labels.innerHTML = `
+        <span>${q.ratingLeft || "Very unlikely"}</span>
+        <span>${q.ratingRight || "Very likely"}</span>
+      `;
+    } else {
+      labels.innerHTML = `
+        <span>${q.ratingLeft ?? ""}</span>
+        <span>${q.ratingRight ?? ""}</span>
+      `;
+    }
+
+    const caption = document.createElement("div");
+    caption.className = "rating-scale-caption";
+    caption.textContent =
+      q.type === "rating-0-10"
+        ? "0 is the lowest score, 10 is the highest."
+        : "1 is the lowest score, 5 is the highest.";
+
+    const row = document.createElement("div");
+    row.className = "rating-row";
+
+    for (let i = min; i <= max; i++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rating-button";
+      btn.textContent = String(i);
+      if (existing === i) btn.classList.add("selected");
+
+      btn.addEventListener("click", () => {
+        answers[q.id] = i;
+        saveAnswers();
+        row.querySelectorAll(".rating-button").forEach((b) =>
+          b.classList.remove("selected")
+        );
+        btn.classList.add("selected");
+
+        let hiddenInput = container.querySelector(
+          `input[type="hidden"][name="${q.name || q.id}"]`
+        );
+        if (!hiddenInput) {
+          hiddenInput = document.createElement("input");
+          hiddenInput.type = "hidden";
+          hiddenInput.name = q.name || q.id;
+          container.appendChild(hiddenInput);
+        }
+        hiddenInput.value = String(i);
+
+        container.closest(".screen")._updateNextBtnState();
+      });
+
+      row.appendChild(btn);
+    }
+
+    container.appendChild(labels);
+    container.appendChild(caption);
+    container.appendChild(row);
+
+    if (typeof existing === "number") {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = q.name || q.id;
+      hidden.value = String(existing);
+      container.appendChild(hidden);
+    }
+  }
+
+  function renderText(q, container) {
+    const existing = typeof answers[q.id] === "string" ? answers[q.id] : "";
+    const textarea = document.createElement("textarea");
+    textarea.name = q.name || q.id;
+    if (q.placeholder) textarea.placeholder = q.placeholder;
+    textarea.value = existing;
+
+    textarea.addEventListener("input", () => {
+      answers[q.id] = textarea.value;
+      saveAnswers();
+      container.closest(".screen")._updateNextBtnState();
+    });
+
+    container.appendChild(textarea);
+
+    const hint = document.createElement("div");
+    hint.className = "small-hint";
+    hint.textContent =
+      "Write as much or as little as you like – concrete examples are very helpful.";
+    container.appendChild(hint);
+  }
+
+  formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
+
+  // Initial render
+  render();
+</script>
+</body>
+</html>
