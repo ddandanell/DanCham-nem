@@ -457,9 +457,7 @@
       transform: translateY(-1px);
     }
 
-    textarea,
-    input[type="text"],
-    input[type="email"] {
+    textarea {
       width: 100%;
       padding: 11px 12px;
       border-radius: var(--input-radius);
@@ -471,9 +469,61 @@
       line-height: 1.5;
     }
 
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: var(--input-radius);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
     textarea::placeholder,
     input::placeholder {
       color: #9ca3af;
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-field label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .contact-field small {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .contact-disclaimer {
+      border: 1px dashed #cbd5f5;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .contact-error {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #c8102e;
+      display: none;
+    }
+
+    .contact-error.active {
+      display: block;
     }
 
     .helper-text {
@@ -707,16 +757,16 @@
   </div>
 
   <main>
-    <!-- IMPORTANT: replace your-random-string with your real FormSubmit ID -->
     <form
       id="survey-form"
       method="POST"
-      action="https://formsubmit.co/ajax/your-random-string"
+      action="https://formsubmit.co/ajax/daviddandanell@gmail.com"
       enctype="multipart/form-data"
     >
       <input type="hidden" name="_subject" value="DanCham Member Survey 2024 submission">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://dancham.id/">
+      <input type="hidden" name="_captcha" value="false">
 
       <div class="screen-shell">
         <div class="card">
@@ -933,6 +983,21 @@
       subtitle: "",
       placeholder: "",
       kind: "text"
+    },
+    {
+      id: "share_details",
+      labelIndex: "15",
+      name: "share_details",
+      type: "single-choice",
+      required: true,
+      title: "Would you like us to follow up with you about your feedback?",
+      subtitle:
+        "Choose \"No\" to keep the survey anonymous. Choose \"Yes\" if you are open to a short follow-up conversation.",
+      options: [
+        "Yes, you can reach out to me",
+        "No, I'd prefer to stay anonymous"
+      ],
+      kind: "single"
     }
   ];
 
@@ -948,14 +1013,32 @@
       optional: "(optional)",
       required: "Required",
       welcomeTitle: "DanCham Member Survey 2024",
-      welcomeBody1: "Help us make DanCham better! Your answers are anonymous and take only 3–5 minutes.",
-      welcomeBody2: "We use the results to improve our events, communication and the overall value of your membership.",
+      welcomeSubtitle: "Help shape a more meaningful Nimbus question space.",
+      welcomeBody1:
+        "We're refreshing the Nimbus question area so it becomes an even more active and meaningful space for members.",
+      welcomeBody2:
+        "Share your suggestions so we focus on the improvements that matter most before we roll the changes out across our wider network.",
+      welcomeBody3:
+        "We use the results to improve our events, communication and the overall value of your membership.",
       thankYou: {
         title: "Thank you for helping us improve DanCham",
         body:
           "Your answers have been recorded. We will use this feedback to shape future events, communication and services so DanCham can become even more relevant for you.",
         panel:
           "You can now close this window. If you have shared something that needs a follow-up, we may contact you through your usual DanCham contact channels."
+      },
+      contact: {
+        title: "Share your details so we can stay in touch",
+        intro:
+          "We're updating our system with the latest member contacts. Please let us know how we can reach you if we have follow-up questions.",
+        name: "Full name",
+        email: "Email",
+        whatsapp: "WhatsApp number",
+        whatsappHint: "Include country code so we dial the right number.",
+        disclaimer:
+          "We will only use these details to follow up on your answers. No spam, and nothing will be shared outside the DanCham team.",
+        error:
+          "Please complete your name, a valid email and your WhatsApp number before sending."
       },
       questions: QUESTIONS_EN
     },
@@ -970,14 +1053,32 @@
       optional: "(valgfrit)",
       required: "Obligatorisk",
       welcomeTitle: "DanCham Medlemsundersøgelse 2024",
-      welcomeBody1: "Hjælp os med at gøre DanCham bedre! Dine svar er anonyme og tager kun 3–5 minutter.",
-      welcomeBody2: "Vi bruger resultaterne til at forbedre arrangementer, kommunikation og værdien af medlemskabet.",
+      welcomeSubtitle: "Hjælp os med at gøre Nimbus-spørgeområdet endnu mere meningsfuldt.",
+      welcomeBody1:
+        "Vi er i gang med at forny Nimbus-spørgeområdet, så det bliver et endnu mere aktivt og meningsfuldt mødested for medlemmerne.",
+      welcomeBody2:
+        "Del dine idéer, så vi prioriterer de forbedringer, der betyder mest, før vi ruller ændringerne ud i vores bredere netværk.",
+      welcomeBody3:
+        "Vi bruger resultaterne til at forbedre arrangementer, kommunikation og værdien af medlemskabet.",
       thankYou: {
         title: "Tak fordi du hjælper os med at forbedre DanCham",
         body:
           "Dine svar er gemt. Vi bruger feedbacken til at forme fremtidige arrangementer, kommunikation og tilbud, så DanCham kan blive endnu mere relevant for dig.",
         panel:
           "Du kan nu lukke vinduet. Hvis du har skrevet noget, der kræver opfølgning, kan det være, vi kontakter dig via dine sædvanlige DanCham-kanaler."
+      },
+      contact: {
+        title: "Del dine oplysninger, så vi kan følge op",
+        intro:
+          "Vi opdaterer vores medlemsdata og vil gerne kunne række ud, hvis vi har spørgsmål til dine svar.",
+        name: "Fulde navn",
+        email: "Email",
+        whatsapp: "WhatsApp-nummer",
+        whatsappHint: "Skriv landekode, så vi ringer til det rigtige nummer.",
+        disclaimer:
+          "Vi bruger kun oplysningerne til opfølgning på undersøgelsen. Ingen spam, og intet deles uden for DanCham-teamet.",
+        error:
+          "Udfyld venligst navn, en gyldig email og dit WhatsApp-nummer, før du sender."
       },
       // For now we reuse English question texts; you can localize titles later if you wish
       questions: QUESTIONS_EN
@@ -986,9 +1087,13 @@
 
   const TOTAL_QUESTIONS = QUESTIONS_EN.length; // for progress
   const STORAGE_KEY = "dancham-member-survey-2024";
+  const SHARE_DETAILS_ID = "share_details";
+  const SHARE_DETAILS_YES = "Yes, you can reach out to me";
+  const CONTACT_STEP_INDEX = TOTAL_QUESTIONS + 1;
+  const THANK_YOU_STEP_INDEX = CONTACT_STEP_INDEX + 1;
 
   let currentLang = "en";
-  let currentStepIndex = 0; // 0 = welcome, 1..TOTAL = questions, TOTAL+1 = thank-you
+  let currentStepIndex = 0; // 0 = welcome, 1..TOTAL = questions, CONTACT_STEP_INDEX = contact, THANK_YOU_STEP_INDEX = thank-you
   let answers = loadAnswers();
   let isSubmitting = false;
 
@@ -1017,6 +1122,15 @@
 
   function getQuestions() {
     return getStrings().questions;
+  }
+
+  function getContactStrings() {
+    return getStrings().contact;
+  }
+
+  function shouldCollectContactDetails() {
+    const value = typeof answers[SHARE_DETAILS_ID] === "string" ? answers[SHARE_DETAILS_ID].trim() : "";
+    return value === SHARE_DETAILS_YES;
   }
 
   function loadAnswers() {
@@ -1068,7 +1182,14 @@
 
     if (currentStepIndex === 0) {
       renderWelcome();
-    } else if (currentStepIndex === TOTAL_QUESTIONS + 1) {
+    } else if (currentStepIndex === CONTACT_STEP_INDEX) {
+      if (shouldCollectContactDetails()) {
+        renderContactDetails();
+      } else {
+        currentStepIndex = THANK_YOU_STEP_INDEX;
+        render();
+      }
+    } else if (currentStepIndex >= THANK_YOU_STEP_INDEX) {
       renderThankYou();
     } else {
       const q = getQuestions()[currentStepIndex - 1];
@@ -1081,24 +1202,29 @@
     const screen = document.createElement("div");
     screen.className = "screen active";
 
+    const paragraphs = [s.welcomeBody1, s.welcomeBody2, s.welcomeBody3].filter(
+      (text) => typeof text === "string" && text.trim().length > 0
+    );
+    const welcomeBodyHtml = paragraphs.map((text) => `<p>${text}</p>`).join("");
+    const subtitleHtml = s.welcomeSubtitle
+      ? `<span class="screen-section-title">${s.welcomeSubtitle}</span>`
+      : "";
+
     screen.innerHTML = `
       <div class="screen-header">
         <div class="screen-header-top">
-          <span class="screen-tag">DanCham Member Survey 2024</span>
-          <span class="screen-section-title">Anonymous, 3–5 minutes</span>
+          <span class="screen-tag">${s.welcomeTitle}</span>
+          ${subtitleHtml}
         </div>
       </div>
       <div class="welcome-title">
         <span>${s.welcomeTitle}</span>
         <span class="hand" aria-hidden="true">🤝</span>
       </div>
-      <div class="welcome-body">
-        <p>${s.welcomeBody1}</p>
-        <p>${s.welcomeBody2}</p>
-      </div>
+      <div class="welcome-body">${welcomeBodyHtml}</div>
       <div class="welcome-highlight">
         <strong>How we use your feedback</strong>
-        <span>We only use your answers in summary to improve DanCham’s activities and member experience. Individual responses are not shared outside the organizing team.</span>
+        <span>We only use your answers in summary to improve DanCham’s activities and member experience. Individual responses stay within the organizing team, and if you opt in to follow up we simply add your contact details to our updated records.</span>
       </div>
       <div class="nav">
         <div class="nav-left"></div>
@@ -1143,6 +1269,220 @@
     `;
 
     screenContainer.appendChild(screen);
+  }
+
+  function renderContactDetails() {
+    const s = getStrings();
+    const c = getContactStrings();
+    const screen = document.createElement("div");
+    screen.className = "screen active";
+
+    screen.innerHTML = `
+      <div class="screen-header">
+        <div class="screen-header-top">
+          <span class="screen-tag">${c.title}</span>
+          <span class="screen-section-title">${s.progressExplainer}</span>
+        </div>
+      </div>
+      <div class="question-title">${c.title}</div>
+      <div class="question-subtitle">${c.intro}</div>
+      <div class="contact-grid">
+        <div class="contact-field">
+          <label for="contact-name">
+            ${c.name}
+            <input type="text" id="contact-name" name="contact_name" autocomplete="name" />
+          </label>
+        </div>
+        <div class="contact-field">
+          <label for="contact-email">
+            ${c.email}
+            <input type="email" id="contact-email" name="contact_email" autocomplete="email" />
+          </label>
+        </div>
+        <div class="contact-field">
+          <label for="contact-whatsapp">
+            ${c.whatsapp}
+            <small>${c.whatsappHint}</small>
+            <input type="tel" id="contact-whatsapp" name="contact_whatsapp" autocomplete="tel" />
+          </label>
+        </div>
+      </div>
+      <div class="contact-disclaimer">${c.disclaimer}</div>
+      <div class="contact-error" id="contact-error">${c.error}</div>
+      <div class="nav">
+        <div class="nav-left">
+          <button class="btn btn-ghost" id="contact-back">${s.back}</button>
+        </div>
+        <div class="nav-right">
+          <button class="btn btn-primary" id="contact-submit">${s.finish}</button>
+        </div>
+      </div>
+    `;
+
+    screenContainer.appendChild(screen);
+
+    const nameInput = screen.querySelector("#contact-name");
+    const emailInput = screen.querySelector("#contact-email");
+    const whatsappInput = screen.querySelector("#contact-whatsapp");
+    const backBtn = screen.querySelector("#contact-back");
+    const submitBtn = screen.querySelector("#contact-submit");
+    const errorEl = screen.querySelector("#contact-error");
+
+    nameInput.value = typeof answers.contact_name === "string" ? answers.contact_name : "";
+    emailInput.value = typeof answers.contact_email === "string" ? answers.contact_email : "";
+    whatsappInput.value = typeof answers.contact_whatsapp === "string" ? answers.contact_whatsapp : "";
+
+    let showErrors = false;
+
+    function normalize(value) {
+      return value.trim();
+    }
+
+    function isValidEmail(value) {
+      return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value);
+    }
+
+    function isContactValid() {
+      const nameOk = normalize(nameInput.value).length > 1;
+      const emailOk = isValidEmail(normalize(emailInput.value));
+      const whatsappOk = normalize(whatsappInput.value).length > 3;
+      return nameOk && emailOk && whatsappOk;
+    }
+
+    function toggleErrorState() {
+      const valid = isContactValid();
+      submitBtn.disabled = !valid || isSubmitting;
+      errorEl.classList.toggle("active", showErrors && !valid);
+    }
+
+    function bufferSave() {
+      answers.contact_name = nameInput.value;
+      answers.contact_email = emailInput.value;
+      answers.contact_whatsapp = whatsappInput.value;
+      saveAnswers();
+    }
+
+    [nameInput, emailInput, whatsappInput].forEach((input) => {
+      input.addEventListener("input", () => {
+        bufferSave();
+        toggleErrorState();
+      });
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (isSubmitting) return;
+      currentStepIndex = TOTAL_QUESTIONS;
+      render();
+    });
+
+    submitBtn.addEventListener("click", async () => {
+      showErrors = true;
+      toggleErrorState();
+      if (submitBtn.disabled) return;
+      await submitSurvey(toggleErrorState);
+    });
+
+    toggleErrorState();
+  }
+
+  async function submitSurvey(onStateChange) {
+    if (isSubmitting) return;
+
+    const notify = () => {
+      if (typeof onStateChange === "function") {
+        onStateChange();
+      }
+    };
+
+    try {
+      isSubmitting = true;
+      notify();
+
+      const formData = new FormData(formEl);
+      const qList = getQuestions();
+
+      qList.forEach((question) => {
+        const name = question.name || question.id;
+        if (!name) return;
+
+        if (question.type === "multi-choice") {
+          formData.delete(name);
+          formData.delete(name + "[]");
+          const arr = answers[question.id];
+          if (Array.isArray(arr)) {
+            arr.forEach((value) => {
+              formData.append(name + "[]", value);
+            });
+          }
+        } else if (question.type === "single-choice") {
+          if (typeof answers[question.id] === "string") {
+            formData.set(name, answers[question.id]);
+          }
+        } else if (question.type === "text") {
+          if (typeof answers[question.id] === "string") {
+            formData.set(name, answers[question.id]);
+          }
+        } else if (
+          question.type === "rating-1-5" ||
+          question.type === "rating-0-10"
+        ) {
+          if (typeof answers[question.id] === "number") {
+            formData.set(name, String(answers[question.id]));
+          }
+        }
+      });
+
+      const followUp = shouldCollectContactDetails();
+      const nameValue = followUp
+        ? (typeof answers.contact_name === "string" ? answers.contact_name.trim() : "")
+        : "";
+      const emailValue = followUp
+        ? (typeof answers.contact_email === "string" ? answers.contact_email.trim() : "")
+        : "";
+      const whatsappValue = followUp
+        ? (typeof answers.contact_whatsapp === "string" ? answers.contact_whatsapp.trim() : "")
+        : "";
+
+      if (followUp) {
+        formData.set("contact_name", nameValue);
+        formData.set("contact_email", emailValue);
+        formData.set("contact_whatsapp", whatsappValue);
+      }
+
+      formData.set("follow_up_permission", followUp ? "Yes" : "No");
+      formData.set("response_language", currentLang);
+      formData.set("submitted_at", new Date().toISOString());
+
+      const action = (formEl.getAttribute("action") || "").trim();
+      const method = (formEl.getAttribute("method") || "POST").toUpperCase();
+
+      const shouldSend = followUp && action.length > 0;
+
+      if (shouldSend) {
+        try {
+          await fetch(action, {
+            method,
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          });
+        } catch (err) {
+          // Network hiccups should not block completion; errors are ignored intentionally.
+        }
+      }
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+      answers = {};
+
+      currentStepIndex = THANK_YOU_STEP_INDEX;
+      render();
+    } finally {
+      isSubmitting = false;
+      notify();
+    }
   }
 
   function renderQuestion(q) {
@@ -1241,67 +1581,16 @@
     updateNextBtnState();
 
     nextBtn.addEventListener("click", async () => {
-      if (!isValid()) return;
+      if (!isValid() || isSubmitting) return;
 
       if (currentStepIndex < TOTAL_QUESTIONS) {
         currentStepIndex += 1;
         render();
+      } else if (shouldCollectContactDetails()) {
+        currentStepIndex = CONTACT_STEP_INDEX;
+        render();
       } else {
-        // Final step -> submit to FormSubmit via AJAX
-        try {
-          isSubmitting = true;
-          updateNextBtnState();
-
-          const formData = new FormData(formEl);
-          const qList = getQuestions();
-
-          qList.forEach((question) => {
-            const name = question.name || question.id;
-            if (!name) return;
-
-            if (question.type === "multi-choice") {
-              const arr = answers[question.id];
-              if (Array.isArray(arr)) {
-                arr.forEach((v) => {
-                  formData.append(name + "[]", v);
-                });
-              }
-            } else if (
-              question.type === "single-choice"
-            ) {
-              if (typeof answers[question.id] === "string") {
-                formData.set(name, answers[question.id]);
-              }
-            } else if (question.type === "text") {
-              if (typeof answers[question.id] === "string") {
-                formData.set(name, answers[question.id]);
-              }
-            } else if (
-              question.type === "rating-1-5" ||
-              question.type === "rating-0-10"
-            ) {
-              if (typeof answers[question.id] === "number") {
-                formData.set(name, String(answers[question.id]));
-              }
-            }
-          });
-
-          const action = formEl.getAttribute("action") || "";
-          const method = (formEl.getAttribute("method") || "POST").toUpperCase();
-
-          await fetch(action, {
-            method,
-            body: formData,
-            headers: {
-              Accept: "application/json"
-            }
-          }).catch(() => {});
-
-          currentStepIndex = TOTAL_QUESTIONS + 1;
-          render();
-        } finally {
-          isSubmitting = false;
-        }
+        await submitSurvey(updateNextBtnState);
       }
     });
   }
