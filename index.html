@@ -104,7 +104,7 @@
 
     .lang-toggle button.active {
       background: #ffffff;
-      color: #0f172a;
+      color: var(--btn-red);
       font-weight: 600;
       box-shadow: 0 1px 3px rgba(148, 163, 184, 0.3);
     }
@@ -201,11 +201,22 @@
       width: 100%;
       text-align: left;
       display: none;
-      animation: riseIn 0.35s ease;
+      animation: slideUpFadeIn 0.4s ease-out;
     }
 
     .screen.active {
       display: block;
+    }
+
+    @keyframes slideUpFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .screen-header {
@@ -260,24 +271,24 @@
     }
 
     .welcome-body {
-      font-size: 15px;
-      line-height: 1.85;
-      max-width: 660px;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 100%;
       color: #475569;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .welcome-highlight {
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 12px 16px;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       font-size: 13px;
       color: #475569;
-      margin-top: 12px;
-      line-height: 1.8;
+      margin-top: 8px;
+      line-height: 1.7;
     }
 
     .welcome-highlight strong {
@@ -286,6 +297,7 @@
       font-size: 12px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      color: #334155;
     }
 
     .question-meta-row {
@@ -329,19 +341,20 @@
     }
 
     .question-title {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 12px;
+      font-size: clamp(20px, 3.5vw, 26px);
+      font-weight: 600;
+      margin-bottom: 16px;
       color: #0f172a;
-      line-height: 1.45;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
     }
 
     .question-subtitle {
       font-size: 15px;
       color: #52607b;
-      margin-bottom: 22px;
-      max-width: 640px;
-      line-height: 1.8;
+      margin-bottom: 24px;
+      max-width: 100%;
+      line-height: 1.7;
     }
 
     .question-main {
@@ -387,7 +400,9 @@
     }
 
     .option-label {
-      font-size: 16px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #0f172a;
     }
 
     .option-row:hover {
@@ -414,21 +429,24 @@
 
     .rating-labels {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: flex-start;
       font-size: 12px;
       color: var(--muted);
-      margin-bottom: 4px;
-      gap: 10px;
+      margin-top: 12px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
     .rating-labels span {
-      max-width: 42%;
+      text-align: left;
     }
 
     .rating-scale-caption {
       font-size: 11px;
       color: #94a3b8;
-      margin-bottom: 10px;
+      margin-top: 8px;
+      text-align: left;
     }
 
     .rating-button {
@@ -476,11 +494,14 @@
       line-height: 1.6;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+      color: #0f172a;
+      font-family: inherit;
     }
 
     textarea {
       min-height: 120px;
       line-height: 1.6;
+      resize: vertical;
     }
 
     textarea::placeholder,
@@ -499,44 +520,142 @@
 
     .contact-grid {
       display: grid;
-      gap: 14px;
+      gap: 20px;
       font-size: 15px;
-      line-height: 1.4;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .contact-field label {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 14px;
       color: #0f172a;
       font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .contact-field input {
+      margin-top: 4px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--input-border);
+      background: var(--input-bg);
+      font-size: 15px;
+      line-height: 1.5;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+    }
+
+    .contact-field input:focus {
+      outline: none;
+      border-color: var(--btn-red);
+      box-shadow: var(--focus-ring), 0 4px 12px rgba(200, 16, 46, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .contact-field input:hover:not(:focus) {
+      border-color: #94a3b8;
     }
 
     .contact-field small {
-      font-size: 11px;
-      color: #94a3b8;
+      font-size: 12px;
+      color: #64748b;
       font-weight: 400;
+      margin-top: -4px;
+      line-height: 1.5;
     }
 
     .contact-disclaimer {
-      border: 1px dashed #cbd5f5;
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 12px;
+      border: 1px solid #e2e8f0;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 14px;
+      padding: 16px 18px 16px 44px;
+      font-size: 13px;
       color: #475569;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      position: relative;
+    }
+
+    .contact-disclaimer::before {
+      content: "ℹ️";
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      font-size: 16px;
+      opacity: 0.7;
     }
 
     .contact-error {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #c8102e;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #c8102e 0%, #dc2626 100%);
+      border-radius: 10px;
       display: none;
+      box-shadow: 0 4px 12px rgba(200, 16, 46, 0.25);
+      line-height: 1.6;
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .contact-error::before {
+      content: "⚠️";
+      position: absolute;
+      left: 16px;
+      top: 12px;
+      font-size: 14px;
     }
 
     .contact-error.active {
       display: block;
+      animation: slideDownFadeIn 0.3s ease-out;
+    }
+
+    @keyframes slideDownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-skip-option {
+      margin-top: 20px;
+      margin-bottom: 12px;
+      text-align: center;
+      padding: 16px 0;
+      border-top: 1px dashed #e2e8f0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .contact-skip-option .btn {
+      width: 100%;
+      justify-content: center;
+      background: #ffffff;
+      border-color: #e2e8f0;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .contact-skip-option .btn:hover:not(:disabled) {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #475569;
     }
 
     .small-hint {
@@ -544,6 +663,7 @@
       color: #94a3b8;
       margin-top: 6px;
       line-height: 1.6;
+      text-align: left;
     }
 
     .nav {
@@ -729,18 +849,39 @@
       }
 
       .card {
-        padding: 28px 20px;
+        padding: 24px 18px;
         border-radius: 18px;
+        gap: 16px;
       }
 
       .welcome-title {
-        font-size: 26px;
+        font-size: 24px;
         justify-content: center;
         text-align: center;
+        margin-bottom: 16px;
+      }
+
+      .welcome-body {
+        font-size: 15px;
+        gap: 10px;
       }
 
       .question-title {
-        font-size: 22px;
+        font-size: 20px;
+        margin-bottom: 14px;
+      }
+
+      .question-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .option-label {
+        font-size: 14px;
+      }
+
+      .option-row {
+        padding: 14px 16px;
       }
 
       .footer-inner {
@@ -752,6 +893,37 @@
 
       .footer-address {
         white-space: normal;
+      }
+
+      .contact-grid {
+        gap: 18px;
+      }
+
+      .contact-field input {
+        padding: 13px 15px;
+        font-size: 16px;
+      }
+
+      .contact-disclaimer {
+        padding: 14px 16px 14px 42px;
+        font-size: 12px;
+      }
+
+      .contact-disclaimer::before {
+        left: 16px;
+        top: 14px;
+        font-size: 15px;
+      }
+
+      .contact-error {
+        padding: 11px 14px 11px 38px;
+        font-size: 12px;
+      }
+
+      .contact-error::before {
+        left: 14px;
+        top: 11px;
+        font-size: 13px;
       }
     }
 
@@ -785,12 +957,17 @@
         font-size: 14px;
       }
 
-      .option-row {
-        padding: 14px 16px;
+      .card {
+        padding: 20px 16px;
+        gap: 14px;
       }
 
-      .card {
-        padding: 24px 18px;
+      .question-title {
+        font-size: 18px;
+      }
+
+      .welcome-title {
+        font-size: 22px;
       }
     }
   </style>
@@ -807,8 +984,8 @@
       />
     </div>
     <div class="lang-toggle" aria-label="Language">
-      <button type="button" data-lang="en" class="active">EN</button>
-      <button type="button" data-lang="da">DA</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="da" class="active">DA</button>
     </div>
   </header>
 
@@ -834,6 +1011,7 @@
       <input type="hidden" name="_subject" value="DanCham Member Survey 2025 Submission">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_cc" value="Jakob@friis-sorensen.com,bjarne.lykke-soerensen@outlook.com">
 
       <div class="screen-shell">
         <div class="card">
@@ -1025,21 +1203,6 @@
       subtitle: "",
       placeholder: "",
       kind: "text"
-    },
-    {
-      id: "share_details",
-      labelIndex: "13",
-      name: "share_details",
-      type: "single-choice",
-      required: true,
-      title: "Would you like us to follow up with you about your feedback?",
-      subtitle:
-        "Choose \"No\" to keep the survey anonymous. Choose \"Yes\" if you are open to a short follow-up conversation.",
-      options: [
-        "Yes, you can reach out to me",
-        "No, I'd prefer to stay anonymous"
-      ],
-      kind: "single"
     }
   ];
 
@@ -1058,30 +1221,30 @@
       welcomeTitle: "DanCham Member Survey 2025",
       welcomeSubtitle: "Help us create a more active and meaningful member community.",
       welcomeBody1:
-        "We're listening! Tell us what you think about DanCham so we can make it even better for you and all our members.",
+        "Help us improve DanCham by sharing your honest feedback about your membership experience.",
       welcomeBody2:
-        "Your honest feedback helps us understand what's working and what could be improved – from events to communication to member benefits.",
-      welcomeBody3:
-        "This takes about 5 minutes and you can choose to stay anonymous or share your details if you'd like us to follow up.",
+        "This takes about 5 minutes. At the end, we'll ask you to update your contact information.",
       thankYou: {
         title: "Thank you for helping us improve DanCham",
         body:
           "Your answers have been recorded. We will use this feedback to shape future events, communication and services so DanCham can become even more relevant for you.",
         panel:
-          "You can now close this window. If you have shared something that needs a follow-up, we may contact you through your usual DanCham contact channels."
+          "You can now close this window. Your contact information has been updated in our system."
       },
       contact: {
-        title: "Share your details so we can stay in touch",
+        title: "Update your contact information",
         intro:
-          "We're updating our system with the latest member contacts. Please let us know how we can reach you if we have follow-up questions.",
+          "We need to verify and update your contact details in our system to ensure we have the correct information. This helps us align everything properly and keep our member database up to date.",
         name: "Full name",
         email: "Email",
         whatsapp: "WhatsApp number",
         whatsappHint: "Include country code so we dial the right number.",
         disclaimer:
-          "We will only use these details to follow up on your answers. No spam, and nothing will be shared outside the DanCham team.",
+          "This is not for spamming or marketing purposes. We only use these details to align our system records and ensure we have accurate member information. Nothing will be shared outside the DanCham team.",
         error:
-          "Please complete your name, a valid email and your WhatsApp number before sending."
+          "Please complete your name, a valid email and your WhatsApp number before sending.",
+        skipButton: "Send without contact information",
+        submitButton: "Send with my information"
       },
       questions: QUESTIONS_EN
     },
@@ -1099,30 +1262,30 @@
       welcomeTitle: "DanCham Medlemsundersøgelse 2025",
       welcomeSubtitle: "Hjælp os med at skabe et mere aktivt og meningsfuldt fællesskab for medlemmerne.",
       welcomeBody1:
-        "Vi lytter! Fortæl os, hvad du synes om DanCham, så vi kan gøre det endnu bedre for dig og alle vores medlemmer.",
+        "Hjælp os med at forbedre DanCham ved at dele din ærlige feedback om din medlemsoplevelse.",
       welcomeBody2:
-        "Din ærlige feedback hjælper os med at forstå, hvad der fungerer godt, og hvad vi kan forbedre – fra arrangementer til kommunikation og medlemsfordele.",
-      welcomeBody3:
-        "Det tager cirka 5 minutter, og du kan vælge at forblive anonym eller dele dine kontaktoplysninger, hvis du gerne vil have os til at følge op.",
+        "Det tager cirka 5 minutter. Til sidst beder vi dig om at opdatere dine kontaktoplysninger.",
       thankYou: {
         title: "Tak for din hjælp til at forbedre DanCham",
         body:
           "Dine svar er blevet registreret. Vi bruger denne feedback til at forme fremtidige arrangementer, kommunikation og services, så DanCham kan blive endnu mere relevant for dig.",
         panel:
-          "Du kan lukke dette vindue nu. Hvis du har delt noget, der kræver opfølgning, kontakter vi dig gennem dine sædvanlige DanCham-kanaler."
+          "Du kan lukke dette vindue nu. Dine kontaktoplysninger er blevet opdateret i vores system."
       },
       contact: {
-        title: "Del dine oplysninger, så vi kan følge op",
+        title: "Opdater dine kontaktoplysninger",
         intro:
-          "Vi opdaterer vores medlemsdata og vil gerne kunne række ud, hvis vi har spørgsmål til dine svar.",
+          "Vi skal verificere og opdatere dine kontaktoplysninger i vores system for at sikre, at vi har de korrekte oplysninger. Dette hjælper os med at justere alt korrekt og holde vores medlemsdatabase opdateret.",
         name: "Fulde navn",
         email: "Email",
         whatsapp: "WhatsApp-nummer",
         whatsappHint: "Skriv landekode, så vi ringer til det rigtige nummer.",
         disclaimer:
-          "Vi bruger kun oplysningerne til opfølgning på undersøgelsen. Ingen spam, og intet deles uden for DanCham-teamet.",
+          "Dette er ikke til spam eller markedsføring. Vi bruger kun disse oplysninger til at justere vores systemregistreringer og sikre, at vi har nøjagtige medlemsoplysninger. Intet deles uden for DanCham-teamet.",
         error:
-          "Udfyld venligst navn, en gyldig email og dit WhatsApp-nummer, før du sender."
+          "Udfyld venligst navn, en gyldig email og dit WhatsApp-nummer, før du sender.",
+        skipButton: "Send uden kontaktoplysninger",
+        submitButton: "Send med mine oplysninger"
       },
       questions: [
         {
@@ -1287,21 +1450,6 @@
           subtitle: "",
           placeholder: "",
           kind: "text"
-        },
-        {
-          id: "share_details",
-          labelIndex: "13",
-          name: "share_details",
-          type: "single-choice",
-          required: true,
-          title: "Vil du gerne have, at vi følger op med dig om din feedback?",
-          subtitle:
-            "Vælg \"Nej\" for at holde undersøgelsen anonym. Vælg \"Ja\", hvis du er åben for en kort opfølgningssamtale.",
-          options: [
-            "Ja, I må gerne kontakte mig",
-            "Nej, jeg vil hellere forblive anonym"
-          ],
-          kind: "single"
         }
       ]
     }
@@ -1309,13 +1457,13 @@
 
   const TOTAL_QUESTIONS = QUESTIONS_EN.length; // for progress
   const STORAGE_KEY = "dancham-member-survey-2024";
-  const SHARE_DETAILS_ID = "share_details";
-  const SHARE_DETAILS_YES = "Yes, you can reach out to me";
-  const SHARE_DETAILS_YES_DA = "Ja, I må gerne kontakte mig";
   const CONTACT_STEP_INDEX = TOTAL_QUESTIONS + 1;
   const THANK_YOU_STEP_INDEX = CONTACT_STEP_INDEX + 1;
+  // Backup endpoint - set this to your server URL that stores form submissions
+  // Example: "https://your-server.com/api/backup-survey" or leave empty to disable
+  const BACKUP_ENDPOINT = ""; // Set your backup server endpoint here
 
-  let currentLang = "en";
+  let currentLang = "da";
   let currentStepIndex = 0; // 0 = welcome, 1..TOTAL = questions, CONTACT_STEP_INDEX = contact, THANK_YOU_STEP_INDEX = thank-you
   let answers = loadAnswers();
   let isSubmitting = false;
@@ -1349,11 +1497,6 @@
 
   function getContactStrings() {
     return getStrings().contact;
-  }
-
-  function shouldCollectContactDetails() {
-    const value = typeof answers[SHARE_DETAILS_ID] === "string" ? answers[SHARE_DETAILS_ID].trim() : "";
-    return value === SHARE_DETAILS_YES || value === SHARE_DETAILS_YES_DA;
   }
 
   function loadAnswers() {
@@ -1393,6 +1536,10 @@
     progressFillEl.style.width = width + "%";
   }
 
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   function render() {
     const s = getStrings();
     if (logoImgEl) {
@@ -1406,18 +1553,16 @@
     if (currentStepIndex === 0) {
       renderWelcome();
     } else if (currentStepIndex === CONTACT_STEP_INDEX) {
-      if (shouldCollectContactDetails()) {
-        renderContactDetails();
-      } else {
-        currentStepIndex = THANK_YOU_STEP_INDEX;
-        render();
-      }
+      renderContactDetails();
     } else if (currentStepIndex >= THANK_YOU_STEP_INDEX) {
       renderThankYou();
     } else {
       const q = getQuestions()[currentStepIndex - 1];
       renderQuestion(q);
     }
+    
+    // Scroll to top smoothly when navigating
+    setTimeout(scrollToTop, 100);
   }
 
   function renderWelcome() {
@@ -1425,7 +1570,7 @@
     const screen = document.createElement("div");
     screen.className = "screen active";
 
-    const paragraphs = [s.welcomeBody1, s.welcomeBody2, s.welcomeBody3].filter(
+    const paragraphs = [s.welcomeBody1, s.welcomeBody2].filter(
       (text) => typeof text === "string" && text.trim().length > 0
     );
     const welcomeBodyHtml = paragraphs.map((text) => `<p>${text}</p>`).join("");
@@ -1445,10 +1590,6 @@
         <span class="hand" aria-hidden="true">🤝</span>
       </div>
       <div class="welcome-body">${welcomeBodyHtml}</div>
-      <div class="welcome-highlight">
-        <strong>How we use your feedback</strong>
-        <span>We only use your answers in summary to improve DanCham’s activities and member experience. Individual responses stay within the organizing team, and if you opt in to follow up we simply add your contact details to our updated records.</span>
-      </div>
       <div class="nav">
         <div class="nav-left"></div>
         <div class="nav-right">
@@ -1513,31 +1654,34 @@
         <div class="contact-field">
           <label for="contact-name">
             ${c.name}
-            <input type="text" id="contact-name" name="contact_name" autocomplete="name" />
+            <input type="text" id="contact-name" name="contact_name" autocomplete="name" placeholder="Enter your full name" />
           </label>
         </div>
         <div class="contact-field">
           <label for="contact-email">
             ${c.email}
-            <input type="email" id="contact-email" name="contact_email" autocomplete="email" />
+            <input type="email" id="contact-email" name="contact_email" autocomplete="email" placeholder="your.email@example.com" />
           </label>
         </div>
         <div class="contact-field">
           <label for="contact-whatsapp">
             ${c.whatsapp}
             <small>${c.whatsappHint}</small>
-            <input type="tel" id="contact-whatsapp" name="contact_whatsapp" autocomplete="tel" />
+            <input type="tel" id="contact-whatsapp" name="contact_whatsapp" autocomplete="tel" placeholder="+62 812 3456 7890" />
           </label>
         </div>
       </div>
       <div class="contact-disclaimer">${c.disclaimer}</div>
       <div class="contact-error" id="contact-error">${c.error}</div>
+      <div class="contact-skip-option">
+        <button class="btn btn-ghost" id="contact-skip" type="button">${c.skipButton || "Send without contact information"}</button>
+      </div>
       <div class="nav">
         <div class="nav-left">
           <button class="btn btn-ghost" id="contact-back">${s.back}</button>
         </div>
         <div class="nav-right">
-          <button class="btn btn-primary" id="contact-submit">${s.finish}</button>
+          <button class="btn btn-primary" id="contact-submit">${c.submitButton || s.finish}</button>
         </div>
       </div>
     `;
@@ -1549,6 +1693,7 @@
     const whatsappInput = screen.querySelector("#contact-whatsapp");
     const backBtn = screen.querySelector("#contact-back");
     const submitBtn = screen.querySelector("#contact-submit");
+    const skipBtn = screen.querySelector("#contact-skip");
     const errorEl = screen.querySelector("#contact-error");
 
     nameInput.value = typeof answers.contact_name === "string" ? answers.contact_name : "";
@@ -1596,6 +1741,15 @@
       if (isSubmitting) return;
       currentStepIndex = TOTAL_QUESTIONS;
       render();
+    });
+
+    skipBtn.addEventListener("click", async () => {
+      if (isSubmitting) return;
+      // Clear contact info and submit without it
+      answers.contact_name = "";
+      answers.contact_email = "";
+      answers.contact_whatsapp = "";
+      await submitSurvey();
     });
 
     submitBtn.addEventListener("click", async () => {
@@ -1655,29 +1809,37 @@
         }
       });
 
-      const followUp = shouldCollectContactDetails();
-      const nameValue = followUp
-        ? (typeof answers.contact_name === "string" ? answers.contact_name.trim() : "")
-        : "";
-      const emailValue = followUp
-        ? (typeof answers.contact_email === "string" ? answers.contact_email.trim() : "")
-        : "";
-      const whatsappValue = followUp
-        ? (typeof answers.contact_whatsapp === "string" ? answers.contact_whatsapp.trim() : "")
-        : "";
+      // Always collect contact details for system alignment
+      const nameValue = typeof answers.contact_name === "string" ? answers.contact_name.trim() : "";
+      const emailValue = typeof answers.contact_email === "string" ? answers.contact_email.trim() : "";
+      const whatsappValue = typeof answers.contact_whatsapp === "string" ? answers.contact_whatsapp.trim() : "";
 
-      if (followUp) {
-        formData.set("contact_name", nameValue);
-        formData.set("contact_email", emailValue);
-        formData.set("contact_whatsapp", whatsappValue);
-      }
-
-      formData.set("follow_up_permission", followUp ? "Yes" : "No");
+      formData.set("contact_name", nameValue);
+      formData.set("contact_email", emailValue);
+      formData.set("contact_whatsapp", whatsappValue);
       formData.set("response_language", currentLang);
       formData.set("submitted_at", new Date().toISOString());
 
       const action = (formEl.getAttribute("action") || "").trim();
       const method = (formEl.getAttribute("method") || "POST").toUpperCase();
+
+      // Prepare backup data as JSON
+      const backupData = {
+        submitted_at: new Date().toISOString(),
+        response_language: currentLang,
+        contact_name: nameValue,
+        contact_email: emailValue,
+        contact_whatsapp: whatsappValue,
+        answers: {}
+      };
+
+      // Collect all answers for backup (reuse qList from above)
+      qList.forEach((question) => {
+        const answerValue = answers[question.id];
+        if (answerValue !== undefined && answerValue !== null && answerValue !== "") {
+          backupData.answers[question.id] = answerValue;
+        }
+      });
 
       // Always send the survey responses via email
       if (action.length > 0) {
@@ -1691,6 +1853,23 @@
           });
         } catch (err) {
           // Network hiccups should not block completion; errors are ignored intentionally.
+        }
+      }
+
+      // Send backup to server (non-blocking, errors are ignored)
+      if (BACKUP_ENDPOINT && BACKUP_ENDPOINT.trim().length > 0) {
+        try {
+          await fetch(BACKUP_ENDPOINT.trim(), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            body: JSON.stringify(backupData)
+          });
+        } catch (err) {
+          // Backup failures should not block completion; errors are ignored intentionally.
+          console.warn("Backup submission failed (non-critical):", err);
         }
       }
 
@@ -1804,11 +1983,10 @@
       if (currentStepIndex < TOTAL_QUESTIONS) {
         currentStepIndex += 1;
         render();
-      } else if (shouldCollectContactDetails()) {
+      } else {
+        // Always go to contact details form after last question
         currentStepIndex = CONTACT_STEP_INDEX;
         render();
-      } else {
-        await submitSurvey(updateNextBtnState);
       }
     });
   }
@@ -1917,28 +2095,6 @@
     const min = q.ratingMin ?? (q.type === "rating-0-10" ? 0 : 1);
     const max = q.ratingMax ?? (q.type === "rating-0-10" ? 10 : 5);
 
-    const labels = document.createElement("div");
-    labels.className = "rating-labels";
-
-    if (q.type === "rating-0-10") {
-      labels.innerHTML = `
-        <span>${q.ratingLeft || "Very unlikely"}</span>
-        <span>${q.ratingRight || "Very likely"}</span>
-      `;
-    } else {
-      labels.innerHTML = `
-        <span>${q.ratingLeft ?? ""}</span>
-        <span>${q.ratingRight ?? ""}</span>
-      `;
-    }
-
-    const caption = document.createElement("div");
-    caption.className = "rating-scale-caption";
-    caption.textContent =
-      q.type === "rating-0-10"
-        ? "0 is the lowest score, 10 is the highest."
-        : "1 is the lowest score, 5 is the highest.";
-
     const row = document.createElement("div");
     row.className = "rating-row";
 
@@ -1974,9 +2130,37 @@
       row.appendChild(btn);
     }
 
-    container.appendChild(labels);
-    container.appendChild(caption);
     container.appendChild(row);
+
+    // Add labels and caption below the rating buttons
+    const labels = document.createElement("div");
+    labels.className = "rating-labels";
+
+    if (q.type === "rating-0-10") {
+      labels.innerHTML = `
+        <span>${q.ratingLeft || "Very unlikely"}</span>
+        <span>${q.ratingRight || "Very likely"}</span>
+      `;
+    } else {
+      if (q.ratingLeft && q.ratingRight) {
+        labels.innerHTML = `
+          <span>${q.ratingLeft}</span>
+          <span>${q.ratingRight}</span>
+        `;
+      }
+    }
+
+    const caption = document.createElement("div");
+    caption.className = "rating-scale-caption";
+    caption.textContent =
+      q.type === "rating-0-10"
+        ? "0 is the lowest score, 10 is the highest."
+        : "1 is the lowest score, 5 is the highest.";
+
+    if (q.ratingLeft && q.ratingRight) {
+      container.appendChild(labels);
+    }
+    container.appendChild(caption);
 
     if (typeof existing === "number") {
       const hidden = document.createElement("input");
